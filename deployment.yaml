@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tetris-game-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tetris-game-app
+  template:
+    metadata:
+      labels:
+        app: tetris-game-app
+    spec:
+      containers:
+      - name: tetris-game-app-container
+        image: amanlabacr.azurecr.io/tetris-game-app:latest
+        ports:
+        - containerPort: 8081  # Change the container port to 8080
