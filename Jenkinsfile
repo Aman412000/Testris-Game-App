@@ -41,7 +41,9 @@ pipeline {
         stage('Deploy to AKS') {
             steps {
                 script {
-                    azureAKSUpdate(credentialsId: azureCredentialsId, resourceGroup: aksResourceGroup, kubernetesCluster: aksClusterName, namespace: 'default', deploymentName: deploymentName, dockerImage: "${env.registryUrl}/${env.dockerImage}")
+                   withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-sp', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                     sh "/usr/local/bin/kubectl apply -f deployment.yaml"
+                    }
                 }
             }
         }
