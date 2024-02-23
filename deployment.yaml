@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tetris-game-app-deployment
+  name: tetris-game-app
 spec:
-  replicas: 3
+  replicas: 3  # Specify the number of replicas you want
   selector:
     matchLabels:
       app: tetris-game-app
@@ -13,7 +13,20 @@ spec:
         app: tetris-game-app
     spec:
       containers:
-      - name: tetris-game-app-container
-        image: amanlabacr.azurecr.io/tetris-game-app:latest
+      - name: tetris-game-app
+        image: amanlabacr.azurecr.io/tetris-game-app:latest  # Use your ACR image
         ports:
-        - containerPort: 8081  # Change the container port to 8080
+        - containerPort: 8081  # Adjust the port if needed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tetris-game-app
+spec:
+  selector:
+    app: tetris-game-app
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081  # Ensure this matches your container port
+  type: LoadBalancer  # Expose the service outside the cluster
