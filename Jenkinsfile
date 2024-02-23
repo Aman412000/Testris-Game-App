@@ -6,7 +6,7 @@ pipeline {
         registryCredential = 'acrcred'
         dockerImage = 'tetris-game-app:latest' // Define your Docker image name
         registryUrl = 'amanlabacr.azurecr.io'
-        azureCredentialsId = 'aks-sp'
+        azureCredentialsId = 'AzureServiceP'
         aksClusterName = 'tetris-deployment'
         aksResourceGroup = 'aman'
         deploymentName = 'tetris-game-deployment'
