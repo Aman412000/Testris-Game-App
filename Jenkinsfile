@@ -42,5 +42,11 @@ pipeline {
                 }
             }
         }
+        
+        stage('Debug Kubernetes Config') {
+            steps {
+                sh 'cat ~/.kube/config'
+            }
+        }
     }
 }
