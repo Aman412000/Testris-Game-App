@@ -6,6 +6,7 @@ pipeline {
         registryCredential = 'acrcred'
         dockerImage = 'tetris-game-app:latest' // Define your Docker image name
         registryUrl = 'amanlabacr.azurecr.io'
+        kubectl = '/usr/local/bin/kubectl' // Path to kubectl executable
     }
    
     stages {
@@ -30,6 +31,14 @@ pipeline {
                     docker.withRegistry("https://${registryUrl}", registryCredential) {
                         dockerImage.push()
                     }
+                }
+            }
+        }
+
+        stage('Deploy to AKS') {
+            steps {
+                script {
+                    sh "sudo ${kubectl} apply -f deployment.yaml"
                 }
             }
         }
