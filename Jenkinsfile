@@ -38,7 +38,7 @@ pipeline {
         stage('Deploy to AKS') {
             steps {
                 script {
-                    sh "sudo ${kubectl} apply -f deployment.yaml"
+                    sh "/usr/local/bin/kubectl apply -f deployment.yaml"
                 }
             }
         }
