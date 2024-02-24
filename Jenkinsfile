@@ -6,10 +6,6 @@ pipeline {
         registryCredential = 'acrcred'
         dockerImage = 'tetris-game-app:latest' // Define your Docker image name
         registryUrl = 'amanlabacr.azurecr.io'
-        azureCredentialsId = 'AzureServiceP'
-        aksClusterName = 'tetris-deployment'
-        aksResourceGroup = 'aman'
-        deploymentName = 'tetris-game-deployment'
     }
    
     stages {
@@ -37,13 +33,12 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Deploy to AKS') {
             steps {
                 script {
-                   withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'aks-sp', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                     sh "/usr/local/bin/kubectl apply -f deployment.yaml"
-                    }
+                    // Apply the Kubernetes YAML files to the AKS cluster
+                    sh "kubectl apply -f deployment.yaml -f service.yaml"
                 }
             }
         }
