@@ -17,16 +17,3 @@ spec:
         image: amanlabacr.azurecr.io/tetris-game-app:latest  # Use your ACR image
         ports:
         - containerPort: 8081  # Adjust the port if needed
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: tetris-game-app
-spec:
-  selector:
-    app: tetris-game-app
-  ports:
-    - protocol: TCP
-      port: 8081
-      targetPort: 8081  # Ensure this matches your container port
-  type: LoadBalancer  # Expose the service outside the cluster
