@@ -33,14 +33,5 @@ pipeline {
                 }
             }
         }
-        
-        stage('Deploy to AKS') {
-            steps {
-                script {
-                    // Apply the Kubernetes YAML files to the AKS cluster
-                    sh "kubectl apply -f deployment.yaml -f service.yaml"
-                }
-            }
-        }
     }
 }
