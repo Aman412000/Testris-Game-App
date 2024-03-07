@@ -1,34 +1,31 @@
 pipeline {
     agent any
-     
+
     environment {
-        registryName = "amanlabacr"
-        registryCredential = 'acrcred'
-        dockerImage = 'tetris-game-app:latest' // Define your Docker image name
-        registryUrl = 'amanlabacr.azurecr.io'
+        DOCKER_CREDENTIALS_ID = 'DockerHub' // Replace with your Jenkins credentials ID for Docker
+        DOCKER_IMAGE = 'amanjadhao71/tetris-game' // Replace with your Docker image name
     }
-   
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/Aman412000/Testris-Game-App.git'
+                git 'https://github.com/Aman412000/Tetris-Game.git'
             }
         }
-        
-        stage ('Build Docker image') {
+
+        stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image with specified name
-                    dockerImage = docker.build "${env.registryUrl}/${env.dockerImage}"
+                    docker.build(env.DOCKER_IMAGE)
                 }
             }
         }
-       
-        stage('Upload Image to ACR') {
+
+        stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry("https://${registryUrl}", registryCredential) {
-                        dockerImage.push()
+                    docker.withRegistry('https://registry.example.com', env.DOCKER_CREDENTIALS_ID) {
+                        docker.image(env.DOCKER_IMAGE).push()
                     }
                 }
             }
